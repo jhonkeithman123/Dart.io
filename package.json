@@ -1,0 +1,22 @@
+{
+  "name": "dart-io",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fast-paced open-source 3D voxel arena shooter with a decoupled deterministic simulation core.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.171.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}
