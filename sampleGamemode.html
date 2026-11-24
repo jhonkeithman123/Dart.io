@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="mode-carousel">
+      <button class="nav-arrow prev" aria-label="Previous Mode">
+        &#10094;
+      </button>
+
+      <div class="mode-banner" data-mode="endless">
+        <!-- Radial speed-lines & duel backdrop -->
+        <div class="banner-fx"></div>
+
+        <!-- Left & Right Voxel Fighter Silhouettes/Sprites -->
+        <div class="fighter left">🏹</div>
+        <div class="fighter right">🥷</div>
+
+        <!-- Center Mode Title -->
+        <div class="banner-content">
+          <span class="mode-tag">CLASSIC SURVIVAL</span>
+          <h2 class="mode-title">ENDLESS ARENA</h2>
+        </div>
+
+        <!-- Bottom-Right Info Button + Expandable Rules Drawer -->
+        <button class="info-btn" aria-label="Gamemode Info">i</button>
+        <div class="info-drawer">
+          <p>
+            No time limit. Survive, climb the leaderboard, and chase your high
+            score.
+          </p>
+        </div>
+      </div>
+
+      <button class="nav-arrow next" aria-label="Next Mode">&#10095;</button>
+    </div>
+
+    <div class="mode-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <style>
+      .mode-carousel {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        max-width: 560px;
+        margin: 0 auto;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .nav-arrow {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        background: #1e293b;
+        color: #e2e8f0;
+        font-size: 18px;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .nav-arrow:hover {
+        border-color: #38bdf8;
+        background: #0f172a;
+        transform: scale(1.08);
+      }
+
+      .mode-banner {
+        position: relative;
+        flex: 1;
+        height: 165px;
+        border-radius: 16px;
+        background: radial-gradient(circle at center, #1e3a5f 0%, #172233 75%);
+        border: 2px solid #38bdf8;
+        box-shadow: 0 0 24px rgba(56, 189, 248, 0.22);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+      }
+
+      /* Speed-lines radiating from center like your sketch */
+      .banner-fx {
+        position: absolute;
+        inset: -20%;
+        background: repeating-conic-gradient(
+          from 0deg,
+          rgba(56, 189, 248, 0.08) 0deg 4deg,
+          transparent 4deg 18deg
+        );
+        mask-image: radial-gradient(circle, transparent 28%, black 70%);
+        pointer-events: none;
+      }
+
+      .fighter {
+        position: absolute;
+        font-size: 38px;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+      }
+      .fighter.left {
+        left: 22px;
+      }
+      .fighter.right {
+        right: 22px;
+        transform: scaleX(-1);
+      }
+
+      .banner-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 0 56px;
+      }
+      .mode-tag {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: #38bdf8;
+        background: rgba(15, 23, 42, 0.7);
+        padding: 3px 8px;
+        border-radius: 999px;
+        margin-bottom: 6px;
+      }
+      .mode-title {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+        color: #ffffff;
+        text-shadow: 0 3px 0 #0f172a;
+      }
+
+      /* Bottom-right 'i' button */
+      .info-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 4;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.45);
+        background: rgba(15, 23, 42, 0.85);
+        color: #ffffff;
+        font-weight: 800;
+        font-style: italic;
+        font-family: Georgia, serif;
+        cursor: pointer;
+      }
+
+      /* Info overlay triggered on hover/focus/tap */
+      .info-drawer {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        background: rgba(15, 23, 42, 0.92);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 44px;
+        text-align: center;
+        color: #cbd5e1;
+        font-size: 13.5px;
+        line-height: 1.45;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .info-btn:hover + .info-drawer,
+      .info-btn:focus + .info-drawer {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mode-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #334155;
+        transition:
+          width 0.2s,
+          background 0.2s;
+      }
+      .dot.active {
+        width: 22px;
+        background: #38bdf8;
+      }
+    </style>
+  </body>
+</html>

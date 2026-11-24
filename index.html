@@ -6,11 +6,24 @@
     <meta name="theme-color" content="#0f172a" />
     <meta name="description" content="Dart.io — a fast-paced open-source 3D voxel arena shooter." />
     <title>Dart.io</title>
+    <link rel="icon" href="favicon_io/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="favicon_io/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon_io/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="favicon_io/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon_io/site.webmanifest" />
   </head>
   <body>
     <div id="app">
       <canvas id="game-canvas"></canvas>
       <div id="ui-root"></div>
+    </div>
+    <!-- Boot splash: plays Loading.mp4 until the game is ready (hidden by src/main.ts). -->
+    <div id="splash" aria-hidden="true">
+      <video id="splash-video" autoplay muted playsinline preload="auto">
+        <source src="Loading.mp4" type="video/mp4" />
+      </video>
+      <img id="splash-gif" alt="" hidden />
+      <div class="splash-status">LOADING<span class="dots"></span></div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

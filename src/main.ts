@@ -44,6 +44,48 @@ const menu = new Menu(uiRoot, (selection) => {
   startMatch(selection);
 });
 
+// ------------------------------------------------------------- boot splash
+// Plays public/Loading.mp4 until the menu is up, then fades out.
+const splash = document.getElementById('splash');
+const splashVideo = document.getElementById('splash-video') as HTMLVideoElement | null;
+const splashGif = document.getElementById('splash-gif') as HTMLImageElement | null;
+const SPLASH_MIN_MS = 1500;   // never flash past too quickly
+const SPLASH_MAX_MS = 9000;   // hard cap if the video never finishes
+const splashStart = performance.now();
+let splashHidden = false;
+
+function hideSplash(): void {
+  if (splashHidden || !splash) return;
+  const wait = Math.max(0, SPLASH_MIN_MS - (performance.now() - splashStart));
+  window.setTimeout(() => {
+    if (splashHidden || !splash) return;
+    splashHidden = true;
+    splash.classList.add('leaving');
+    window.setTimeout(() => splash.remove(), 600);
+  }, wait);
+}
+
+function splashGifFallback(): void {
+  if (!splashVideo || !splashGif || splashVideo.dataset.fallback === '1') return;
+  splashVideo.dataset.fallback = '1';
+  splashVideo.remove();
+  splashGif.src = 'Logo.gif';
+  splashGif.hidden = false;
+  // The gif loops forever, so dismiss on page load (still respecting the minimum).
+  window.addEventListener('load', hideSplash, { once: true });
+}
+
+if (splashVideo) {
+  splashVideo.addEventListener('error', splashGifFallback, true); // <source> errors don't bubble
+  splashVideo.addEventListener('ended', hideSplash);
+  void splashVideo.play().catch(() => { /* autoplay blocked — the max timeout still hides it */ });
+  // If it never starts loading at all, switch to the gif after a couple of seconds.
+  window.setTimeout(() => { if (splashVideo.isConnected && splashVideo.readyState === 0) splashGifFallback(); }, 2500);
+}
+window.setTimeout(hideSplash, SPLASH_MAX_MS);
+splash?.addEventListener('click', hideSplash, { once: true });
+window.addEventListener('keydown', hideSplash, { once: true });
+
 function startMatch(selection: MenuSelection): void {
   for (const off of unsubs) off();
   unsubs = [];
